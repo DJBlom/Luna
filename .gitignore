@@ -1,0 +1,8 @@
+# Exclude the buiild folders contents from commits
+build/*
+!build/.gitkeep
+
+# Exclude unwanted test folders/files
+test/UnitTests
+test/objs
+test/lib
