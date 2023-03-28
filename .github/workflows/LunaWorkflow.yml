@@ -25,24 +25,20 @@ jobs:
       
   Tests:
     runs-on: ubuntu-latest
-    container: dawidblom/luna:latest       
+    container: dawidblom/luna:latest  
+    needs: Build
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
     - name: Static Code Analysis
- #     needs: Build
       run: scripts/StaticCodeAnalysis.sh
 
     - name: Unit Tests
- #     needs: Static Code Anlysis
-      run: |
-        scripts/UnitTests.sh 
+      run: scripts/UnitTests.sh 
       env:
         CPPUTEST_HOME: ${{ vars.CPPUTEST_HOME }}
 
     - name: Code Coverage
- #     needs: Unit Tests
-      run: |
-        scripts/CodeCoverage.sh
+      run: scripts/CodeCoverage.sh
 
