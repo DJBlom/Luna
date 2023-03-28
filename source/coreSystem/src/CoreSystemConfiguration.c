@@ -16,7 +16,6 @@ struct CoreSystemMembers
 	uint16_t* watchdogMask;
 	TaskHandle_t* serviceHandle[NUMBER_OF_SERVICES];
 	SemaphoreHandle_t serviceSemaphore[NUMBER_OF_SERVICES];
-	SemaphoreHandle_t watchdogMutex;
 };
 
 
