@@ -1,0 +1,48 @@
+name: Luna CI/CD
+on: 
+  pull_request:
+    branches:
+    - main
+    - develop
+
+  push:
+    branches:
+    - develop
+    - feature/*
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    container: dawidblom/luna:latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+    - name: Build Project
+      run: scripts/Build.sh  
+      
+  Tests:
+    runs-on: ubuntu-latest
+    container: dawidblom/luna:latest       
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Static Code Analysis
+      needs: Build Project
+      run: scripts/StaticCodeAnalysis.sh
+
+    - name: Unit Tests
+      needs: Static Code Anlysis
+      run: |
+        scripts/UnitTests.sh 
+      env:
+        CPPUTEST_HOME: ${{ vars.CPPUTEST_HOME }}
+
+    - name: Code Coverage
+      needs: Unit Tests
+      run: |
+        scripts/CodeCoverage.sh
+
