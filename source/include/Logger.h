@@ -1,7 +1,7 @@
 
 
 #ifndef _LOGGER_H_
-#define _LOGGER_H 
+#define _LOGGER_H_ 
 #include "stm32f4xx_hal.h"
 namespace System {
     class Logger {
@@ -13,9 +13,7 @@ namespace System {
             Logger& operator= (const Logger&) = default;
             virtual ~Logger() = default;
 
-            virtual bool EnableUart2();
-
-
+            virtual void LogMessage(const char* message);
         private:
             const char* prefix{nullptr};
     };

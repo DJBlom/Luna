@@ -6,8 +6,10 @@
  * Note: 
  *******************************************************************************/
 #include "CppUTest/TestHarness.h"
+#include "CppUTestExt/MockSupport.h"
 
 #include "Logger.h"
+#include "LoggerMock.h"
 
 
 extern "C" 
@@ -21,24 +23,28 @@ using genericType = std::uint32_t;
  * 1) Initialize the system logger with a prefix message
  * 2) Enable the Uart2 for transferring data using DMA
  * 3) A method to log messages to the console.
+ * 4) Enable DMA.
  **/
 TEST_GROUP(SystemLoggerTest)
 {
-    System::Logger logger;
+
     void setup()
     {
-        logger = System::Logger{"System Running."};
+
     }
 
     void teardown()
     {
+        mock().clear();
     }
 };
 
-TEST(SystemLoggerTest, EnableTheUart2ForTransferringDataUsingDMA)
+TEST(SystemLoggerTest, InitializeTheSystemLoggerWithAPrefixMessage)
 {
-    bool expected = true;
-    bool uart2Enabled = logger.EnableUart2();
+    mock().expectOneCall("DmaEnable");
+    System::Logger* logger = new Mock::Logger{"System Running."};
+    logger->DmaEnable();
 
-    CHECK_EQUAL(expected, uart2Enabled);
+    mock().checkExpectations();
+    delete logger;
 }
