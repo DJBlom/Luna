@@ -1,13 +1,11 @@
 #include "Logger.h"
 
-
 System::Logger::Logger(const char* prefixMessage) 
 {
     this->prefix = prefixMessage;
 }
 
 
-bool System::Logger::EnableUart2()
+void System::Logger::LogMessage(const char* message)
 {
-    return true;
 }

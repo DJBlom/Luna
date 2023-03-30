@@ -9,17 +9,16 @@
 PROJECT_DIR :=$(realpath ..)
 TEST_DIR :=$(realpath .)
 TEST_TARGET :=UnitTests
-CPP_PLATFORM :=g++
-
 CPP_PLATFORM :=-std=c++20
 
 SRC_DIRS :=\
 	$(PROJECT_DIR)/source/src\
+	$(TEST_DIR)/mocks/src
 	
 INCLUDE_DIRS :=\
 	$(CPPUTEST_HOME)/include\
 	$(PROJECT_DIR)/source/include\
-	$(TEST_DIR)/mocks
+	$(TEST_DIR)/mocks/include
 
 
 TEST_SRC_DIRS :=\
@@ -28,7 +27,6 @@ TEST_SRC_DIRS :=\
 	$(TEST_DIR)/mocks
 
 
-CPPUTEST_ENABLE_DEBUG := Y
 CPPUTEST_USE_GCOV := Y
 CPPUTEST_USE_EXTENSIONS := Y
 -include $(CPPUTEST_HOME)/build/MakefileWorker.mk

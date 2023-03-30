@@ -36,6 +36,7 @@ if(BUILD_LUNA)
     target_include_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/source/
         ${CMAKE_SOURCE_DIR}/source/include/
+        ${CMAKE_SOURCE_DIR}/source/utilities/include/
         ${CMAKE_SOURCE_DIR}/system/include/stm32f4xx/
         ${CMAKE_SOURCE_DIR}/source/coreSystem/include/
     )
