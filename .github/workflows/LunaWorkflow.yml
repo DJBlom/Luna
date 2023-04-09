@@ -35,7 +35,10 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Unit Tests
-      run: scripts/UnitTests.sh 
+      run: |
+        cd test
+        make -s -f Makefile UnitTests
+        ./UnitTests -c -v
       env:
         CPPUTEST_HOME: ${{ vars.CPPUTEST_HOME }}
 
