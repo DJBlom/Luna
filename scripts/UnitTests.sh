@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd ../test
+cd test
+pwd
 make clean
 make -s -f Makefile UnitTests
 ./UnitTests -c -v
