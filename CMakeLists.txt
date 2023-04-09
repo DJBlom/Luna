@@ -29,16 +29,16 @@ if(BUILD_LUNA)
     )
 
     add_executable(${PROJECT_NAME}
-        ${CMAKE_SOURCE_DIR}/source/main.c
         ${CMAKE_SOURCE_DIR}/startup/startup_stm32f411xe.s
+        ${CMAKE_SOURCE_DIR}/source/main.cpp
     )
 
     target_include_directories(${PROJECT_NAME} PRIVATE
-        ${CMAKE_SOURCE_DIR}/source/
-        ${CMAKE_SOURCE_DIR}/source/include/
-        ${CMAKE_SOURCE_DIR}/source/utilities/include/
+        ${CMAKE_SOURCE_DIR}/utilities/include/
         ${CMAKE_SOURCE_DIR}/system/include/stm32f4xx/
-        ${CMAKE_SOURCE_DIR}/source/coreSystem/include/
+        ${CMAKE_SOURCE_DIR}/rmSystem/include/
+        ${CMAKE_SOURCE_DIR}/source/include/
+        ${CMAKE_SOURCE_DIR}/source/
     )
 
     set(LINKER_SCRIPTS
@@ -56,9 +56,14 @@ if(BUILD_LUNA)
         LINKER:-Map,${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.map
     )
 
-    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/source/coreSystem)
-        add_subdirectory(source/coreSystem)
-        target_link_libraries(${PROJECT_NAME} PRIVATE coreSystem)
+    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/rmSystem)
+        add_subdirectory(rmSystem)
+        target_link_libraries(${PROJECT_NAME} PRIVATE rmSystem)
+    endif()
+
+    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/utilities)
+        add_subdirectory(utilities)
+        target_link_libraries(${PROJECT_NAME} PRIVATE utilities)
     endif()
 
     if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/system)

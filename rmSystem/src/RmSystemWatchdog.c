@@ -8,25 +8,7 @@
  * vApplicationIdleHook is native to FreeRTOS and does not require a
  * definition, only a implementation.
  *******************************************************************************/
-#include <CoreSystemWatchdog.h>
-
-static IWDG_HandleTypeDef watchdog;
-
-bool CoreSystemWatchdogInitialize()
-{
-    bool success = false;
-    watchdog.Instance = IWDG;
-    watchdog.Init.Prescaler = IWDG_PRESCALER_4;
-    watchdog.Init.Reload = 4095;
-    if(HAL_IWDG_Init(&watchdog) == HAL_OK)
-    {
-        success = true;
-    }
-
-    return  success;
-}
-
-
+#include <RmSystemWatchdog.h>
 
 bool ServiceIsRunning(uint16_t bitPosition)
 {
@@ -38,7 +20,6 @@ bool ServiceIsRunning(uint16_t bitPosition)
 
 	return isRunning;
 }
-
 
 
 bool SetServiceWatchdogBit(uint16_t serviceNumber)
@@ -54,13 +35,10 @@ void vApplicationIdleHook( void )
 	{
 		if (ServiceIsRunning(i) == true)
         {
-            HAL_IWDG_Refresh(&watchdog);
         }
         else 
         {
             break;
         }
 	}
-    
-
 }

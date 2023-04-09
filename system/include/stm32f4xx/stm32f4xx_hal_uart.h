@@ -568,6 +568,7 @@ typedef struct
   *         The Handle Instance can be USART1, USART2 or LPUART.
   * @retval None
   */
+
 #define __HAL_UART_HWCONTROL_RTS_ENABLE(__HANDLE__)       \
   do{                                                     \
     SET_BIT((__HANDLE__)->Instance->CR3, USART_CR3_RTSE); \

@@ -6,17 +6,14 @@
  *
  * NOTE:
  *******************************************************************************/
-#ifndef _CORE_SYSTEM_WATCHDOG_H_
-#define _CORE_SYSTEM_WATCHDOG_H_
+#ifndef _RM_SYSTEM_WATCHDOG_H_
+#define _RM_SYSTEM_WATCHDOG_H_
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-#include <CoreSystemConfiguration.h>
-#include "stm32f4xx_hal_iwdg.h"
-
-bool CoreSystemWatchdogInitialize(void);
+#include <RmSystemConfiguration.h>
 bool ServiceIsRunning(uint16_t bitPosition);
 bool SetServiceWatchdogBit(uint16_t serviceNumber);
 #ifdef __cplusplus

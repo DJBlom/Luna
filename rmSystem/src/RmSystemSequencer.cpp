@@ -8,7 +8,7 @@
  * NOTE: It's important to note that this ISR is native to FreeRTOS and does not
  * require a definition, only an implementation.
  *******************************************************************************/
-#include "CoreSystem.h"
+#include "RmSystemSequencer.h"
 
 
 static TickType_t currentTickCount = 0;
@@ -17,7 +17,6 @@ bool CoreSystemInitialization(void)
 {
     bool success = false;
 	SetWatchdogMask(0);
-
 	for (uint8_t i = 0; i < NUMBER_OF_SERVICES; i++)
 	{
         TaskHandle_t serviceHandle = NULL;
@@ -44,7 +43,6 @@ void vApplicationTickHook( void )
 {
 	currentTickCount = xTaskGetTickCountFromISR();
 
-
 	if ((currentTickCount % SERVICE1_HZ) == ZERO)
 	{
 		xSemaphoreGiveFromISR(GetServiceSemaphore(ZERO), NULL);
@@ -60,27 +58,21 @@ void vApplicationTickHook( void )
 		xSemaphoreGiveFromISR(GetServiceSemaphore(TWO), NULL);
 	}
 
-	if ((currentTickCount % SERVICE4_HZ) == ZERO)
-	{
-		xSemaphoreGiveFromISR(GetServiceSemaphore(THREE), NULL);
-	}
-
-	if ((currentTickCount % SERVICE5_HZ) == ZERO)
-	{
-		xSemaphoreGiveFromISR(GetServiceSemaphore(FOUR), NULL);
-	}
-
-	if ((currentTickCount % SERVICE6_HZ) == ZERO)
-	{
-		xSemaphoreGiveFromISR(GetServiceSemaphore(FIVE), NULL);
-	}
+//	if ((currentTickCount % SERVICE4_HZ) == ZERO)
+//	{
+//		xSemaphoreGiveFromISR(GetServiceSemaphore(THREE), NULL);
+//	}
+//
+//	if ((currentTickCount % SERVICE5_HZ) == ZERO)
+//	{
+//		xSemaphoreGiveFromISR(GetServiceSemaphore(FOUR), NULL);
+//	}
+//
+//	if ((currentTickCount % SERVICE6_HZ) == ZERO)
+//	{
+//		xSemaphoreGiveFromISR(GetServiceSemaphore(FIVE), NULL);
+//	}
 }
-
-
-
-
-
-
 
 
 

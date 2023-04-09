@@ -7,8 +7,8 @@
  * NOTE: A.K.A a bunch of setters and getters used by the core system and it's
  * services for initialization and sequencing.
  *******************************************************************************/
-#ifndef _CORE_SYSTEM_CONFIGURATION_H_
-#define _CORE_SYSTEM_CONFIGURATION_H_
+#ifndef _RM_SYSTEM_CONFIGURATION_H_
+#define _RM_SYSTEM_CONFIGURATION_H_
 #ifdef __cplusplus
 extern "C"
 {
@@ -20,7 +20,7 @@ extern "C"
 #include <stdint.h>
 #include <stdbool.h>
 
-#define NUMBER_OF_SERVICES 6
+#define NUMBER_OF_SERVICES 3
 #define STACK_SIZE 250
 
 enum
@@ -28,9 +28,9 @@ enum
 	SERVICE1_HZ = 2,  // Fifty Hz
 	SERVICE2_HZ = 10, // Ten Hz
 	SERVICE3_HZ = 20, // Five Hz
-	SERVICE4_HZ = 25, // Four Hz
-	SERVICE5_HZ = 50, // Two Hz
-	SERVICE6_HZ = 100 // One Hz
+//	SERVICE4_HZ = 25, // Four Hz
+//	SERVICE5_HZ = 50, // Two Hz
+//	SERVICE6_HZ = 100 // One Hz
 };
 
 enum

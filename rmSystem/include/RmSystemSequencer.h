@@ -5,16 +5,15 @@
  *
  * NOTE:
  *******************************************************************************/
-#ifndef _CORE_SYSTEM_H_
-#define _CORE_SYSTEM_H_
+#ifndef _RM_SYSTEM_SEQUENCER_H_
+#define _RM_SYSTEM_SEQUENCER_H_
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-#include <CoreSystemConfiguration.h>
-
-    bool CoreSystemInitialization(void);
-
+#include <RmSystemConfiguration.h>
+#include "Logger.h"
+bool CoreSystemInitialization(void);
 #ifdef __cplusplus
 }
 #endif

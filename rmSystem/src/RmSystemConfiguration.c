@@ -8,7 +8,7 @@
  * A.K.A CoreSystem, CoreSystemConfiguration, CoresystemServices, and
  * CoreSystemWatchdog.
  *******************************************************************************/
-#include <CoreSystemConfiguration.h>
+#include <RmSystemConfiguration.h>
 
 
 struct CoreSystemMembers
