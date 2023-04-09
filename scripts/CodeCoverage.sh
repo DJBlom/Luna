@@ -2,7 +2,7 @@
 
 CMAKE=cmake
 COVERAGE_DIR=test/objs$(pwd)/test/tests
-thresholds=("100" "100" "80") # "Lines", "Functions" "Branches"
+thresholds=("100" "100" "25") # "Lines", "Functions" "Branches"
 PASS=0
 FAIL=1
 

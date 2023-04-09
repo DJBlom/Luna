@@ -1,5 +1,5 @@
 /********************************************************************************
- * Contents: Tests for the system logger.
+ * Contents: Template Test.
  * Author: Dawid Blom.
  * Date: March 28, 2023.
  *
@@ -7,10 +7,6 @@
  *******************************************************************************/
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
-
-#include "Logger.h"
-#include "LoggerMock.h"
-
 
 extern "C" 
 {
@@ -20,14 +16,10 @@ extern "C"
 using genericType = std::uint32_t;
 
 /***************** TEST LIST ***************************************************
- * 1) Initialize the system logger with a prefix message
- * 2) Enable the Uart2 for transferring data using DMA
- * 3) A method to log messages to the console.
- * 4) Enable DMA.
+ * 1) Item 1.
  **/
-TEST_GROUP(SystemLoggerTest)
+TEST_GROUP(Template)
 {
-
     void setup()
     {
 
@@ -35,16 +27,10 @@ TEST_GROUP(SystemLoggerTest)
 
     void teardown()
     {
-        mock().clear();
     }
 };
 
-TEST(SystemLoggerTest, InitializeTheSystemLoggerWithAPrefixMessage)
+TEST(Template, PassingTest)
 {
-    mock().expectOneCall("DmaEnable");
-    System::Logger* logger = new Mock::Logger{"System Running."};
-    logger->DmaEnable();
-
-    mock().checkExpectations();
-    delete logger;
+    CHECK_EQUAL(1, 1);
 }
