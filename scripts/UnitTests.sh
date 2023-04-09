@@ -2,7 +2,8 @@
 
 cd test
 ls -la
-make
+cat Makefile
+#make clean
 #make -s -f Makefile UnitTests
 #./UnitTests -c -v
 
