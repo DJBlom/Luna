@@ -30,7 +30,6 @@ jobs:
   Tests:
     runs-on: ubuntu-latest
     container: dawidblom/luna:latest  
-    needs: Build
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
