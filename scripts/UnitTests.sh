@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd test
-pwd
+ls -la
 make clean
 make -s -f Makefile UnitTests
 ./UnitTests -c -v
