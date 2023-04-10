@@ -8,8 +8,8 @@
 ##############################################################
 PROJECT_DIR :=$(realpath ..)
 TEST_DIR :=$(realpath .)
-TEST_TARGET :=UnitTests
-CPP_PLATFORM :=-std=c++20
+TEST_TARGET := UnitTests
+CPP_PLATFORM := -std=c++20
 
 SRC_DIRS :=\
 	$(PROJECT_DIR)/source/src\
@@ -28,7 +28,7 @@ TEST_SRC_DIRS :=\
 
 
 CPPUTEST_USE_GCOV := Y
-CPPUTEST_USE_EXTENSIONS := Y
+#CPPUTEST_USE_EXTENSIONS := Y
 -include $(CPPUTEST_HOME)/build/MakefileWorker.mk
 
 
