@@ -22,17 +22,17 @@ bool System::Logger::LogMessage(const char* userMessage, ...)
     std::vsnprintf(this->buffer, BUFFERSIZE, this->message, args);
     va_end(args);
 
+    
     DMA1_Stream6->M0AR = (uint32_t)this->buffer;
     DMA1_Stream6->PAR = (uint32_t)&USART2->DR;
     DMA1_Stream6->NDTR = (uint8_t)strlen(this->buffer);
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_EN;
-    if (TransferIsComplete() == true)
+    if ((TransferIsComplete()) == true)
     {
         DMA1->HIFCR = DMA1->HIFCR | DMA_HIFCR_CTCIF6;
         DMA1_Stream6->CR = DMA1_Stream6->CR & ~DMA_SxCR_EN;
         messageLogged = true;
     }
-
  
     return messageLogged;
 }
@@ -66,6 +66,7 @@ void System::Logger::GpioConfigure()
     GPIOA->AFR[UART2::GPIO_ALT] = GPIOA->AFR[UART2::GPIO_ALT] | GPIO_AFRL_AFSEL2_1;
     GPIOA->AFR[UART2::GPIO_ALT] = GPIOA->AFR[UART2::GPIO_ALT] | GPIO_AFRL_AFSEL2_2;
     GPIOA->AFR[UART2::GPIO_ALT] = GPIOA->AFR[UART2::GPIO_ALT] & ~GPIO_AFRL_AFSEL2_3;
+
 }
 
 
@@ -98,3 +99,13 @@ bool System::Logger::TransferIsComplete()
 
     return transferComplete;
 }
+
+//extern "C" void DMA1_Stream6_IRQHandler(void)
+//{
+//    if (DMA1->HISR & DMA_HISR_TCIF6)
+//    {
+//        DMA1->HIFCR = DMA1->HIFCR | DMA_HIFCR_CTCIF6;
+//        DMA1_Stream6->CR = DMA1_Stream6->CR & ~DMA_SxCR_EN;
+//    }
+//}
+

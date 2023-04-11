@@ -16,8 +16,9 @@
 
 #include "RmSystemSequencer.h"
 #include "RmSystemServices.h"
-
 #include "Logger.h"
+
+
 
 
 
@@ -31,6 +32,7 @@ int main(void)
 
     System::Logger logger{"System: "};
     logger.LogMessage("Restarted");
+
     if (CoreSystemInitialization() == true)
     {
         if (CreateSystemServices() == true)

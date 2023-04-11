@@ -21,23 +21,24 @@ extern "C"
 #include <stdbool.h>
 
 #define NUMBER_OF_SERVICES 3
-#define STACK_SIZE 250
+#define STACK_SIZE 500
 
 enum
 {
-	SERVICE1_HZ = 2,  // Fifty Hz
-	SERVICE2_HZ = 10, // Ten Hz
-	SERVICE3_HZ = 20, // Five Hz
-//	SERVICE4_HZ = 25, // Four Hz
-//	SERVICE5_HZ = 50, // Two Hz
-//	SERVICE6_HZ = 100 // One Hz
+	SERVICE1_HZ = 0x20,  // Fifty Hz
+	SERVICE2_HZ = 0x25, // Ten Hz
+	SERVICE3_HZ = 0x50, // Five Hz
 };
 
 enum
 {
-	ZERO, ONE, TWO,
-	THREE, FOUR, FIVE,
-	SIX
+	ZERO, 
+    ONE, 
+    TWO,
+	THREE,
+    FOUR,
+    FIVE,
+    SIX
 };
 
 
