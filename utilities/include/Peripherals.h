@@ -9,7 +9,6 @@
  *******************************************************************************/
 #ifndef _PERIPHERALS_H_ 
 #define _PERIPHERALS_H_ 
-#include "core_cm4.h"
 #include "stm32f411xe.h"
 namespace System {
     class Peripherals {
