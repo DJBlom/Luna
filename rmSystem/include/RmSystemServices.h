@@ -14,6 +14,7 @@ extern "C"
 #include <RmSystemConfiguration.h>
 #include <RmSystemWatchdog.h>
 #include "Logger.h"
+#include "Uart2.h"
 
 bool CreateSystemServices(void);
 void Service1(void* p);

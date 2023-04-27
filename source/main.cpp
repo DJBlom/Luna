@@ -1,22 +1,17 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/********************************************************************************
+ * Contents: The main function
+ * Author: Dawid Blom
+ * Date: April 13, 2023
+ *
+ * Note: 
+ *******************************************************************************/
 #include "RmSystemSequencer.h"
 #include "RmSystemServices.h"
+#include "Peripherals.h"
 #include "Logger.h"
+#include "Uart2.h"
+
+
 
 
 
@@ -25,13 +20,17 @@
 
 int main(void)
 {
-    // Enable RCC clocks for usart2.
-    RCC->AHB1ENR = RCC->AHB1ENR | RCC_AHB1ENR_GPIOAEN;
-    RCC->APB1ENR = RCC->APB1ENR | RCC_APB1ENR_USART2EN; 
-    RCC->AHB1ENR = RCC->AHB1ENR | RCC_AHB1ENR_DMA1EN;
+    System::Peripherals peripherals;
+    peripherals.Initialize();
 
+    // Enable the green user LED
+    GPIOA->MODER = GPIOA->MODER | (1U << 10);
+
+
+
+    Comm::Uart2 uart2;
     System::Logger logger{"System: "};
-    logger.LogMessage("Restarted");
+    logger.LogMessage(uart2, "Restarted \n\n\r");
 
     if (CoreSystemInitialization() == true)
     {
@@ -41,12 +40,12 @@ int main(void)
         }
         else
         {
-            logger.LogMessage("Service Creation FAILED");
+            logger.LogMessage(uart2, "Service Creation FAILED \n\n\r");
         }
     }
     else
     {
-        logger.LogMessage("Initialization FAILED");
+        logger.LogMessage(uart2, "Initialization FAILED \n\n\r");
     }
 
     return 0;
