@@ -25,9 +25,9 @@ extern "C"
 
 enum
 {
-	SERVICE1_HZ = 0x20,  // Fifty Hz
-	SERVICE2_HZ = 0x25, // Ten Hz
-	SERVICE3_HZ = 0x50, // Five Hz
+	SERVICE1_HZ = 0x2,  // Fifty Hz
+	SERVICE2_HZ = 0x5,  // Ten Hz
+	SERVICE3_HZ = 0x10, // Five Hz
 };
 
 enum

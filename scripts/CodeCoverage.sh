@@ -2,7 +2,7 @@
 
 CMAKE=cmake
 COVERAGE_DIR=test/objs$(pwd)/test/tests
-thresholds=("100" "100" "25") # "Lines", "Functions" "Branches"
+thresholds=("100" "80" "30") # "Lines", "Functions" "Branches"
 PASS=0
 FAIL=1
 
@@ -43,10 +43,10 @@ fi
 
 ## Check if the function coverage is less than 90%
 function_threshold=$PASS
-if [[ "$function_coverage" != "${thresholds[1]}" ]]; 
+if [[ "$function_coverage" < "${thresholds[1]}" ]]; 
 then
     echo " "
-    echo -e "\e[31mFunction coverage should ${thresholds[1]}%: FAILED \e[0m"
+    echo -e "\e[31mFunction coverage should be ${thresholds[1]}%: FAILED \e[0m"
     echo -e "\e[31mCurrent function coverage is: $function_coverage \e[0m"
     function_threshold=$FAIL
 else

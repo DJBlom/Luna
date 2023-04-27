@@ -40,14 +40,15 @@ bool CreateSystemServices(void)
 
 void Service1(void* serviceNumber)
 {
+    Comm::Uart2 uart2; 
     System::Logger service1{"Service"};
-    std::uint32_t count{0};
+    std::uint32_t count = (std::uint32_t)serviceNumber;
 	while (TRUE)
 	{
 		if (xSemaphoreTake(GetServiceSemaphore(ZERO), (TickType_t) FIVE) == pdTRUE)
 		{
             count++;
-            service1.LogMessage(" %d: Running @: %dHz | Serviced: %d", (int) serviceNumber, 50, count);
+            service1.LogMessage(uart2, " %d: Running @: %dHz | Serviced: %d \n\n\r", (int) serviceNumber, 50, count);
 
 			// Load
 
@@ -60,14 +61,15 @@ void Service1(void* serviceNumber)
 
 void Service2(void* serviceNumber)
 {
+    Comm::Uart2 uart2; 
     System::Logger service2{"Service"};
-    std::uint32_t count{0};
+    std::uint32_t count = (std::uint32_t)serviceNumber;
 	while (TRUE)
 	{
 		if (xSemaphoreTake(GetServiceSemaphore(ONE), (TickType_t) FIVE) == pdTRUE)
 		{
             count++;
-            service2.LogMessage(" %d: Running @: %dHz | Serviced: %d", (int) serviceNumber, 25, count);
+            service2.LogMessage(uart2, " %d: Running @: %dHz | Serviced: %d \n\n\r", (int) serviceNumber, 20, count);
 
 			// Load
 
@@ -80,14 +82,15 @@ void Service2(void* serviceNumber)
 
 void Service3(void* serviceNumber)
 {
+    Comm::Uart2 uart2; 
     System::Logger service3{"Service"};
-    std::uint32_t count{0};
+    std::uint32_t count = (std::uint32_t)serviceNumber;
 	while (TRUE)
 	{
 		if (xSemaphoreTake(GetServiceSemaphore(TWO), (TickType_t) FIVE) == pdTRUE)
 		{
             count++;
-            service3.LogMessage(" %d: Running @: %dHz | Serviced: %d", (int) serviceNumber, 10, count);
+            service3.LogMessage(uart2, " %d: Running @: %dHz | Serviced: %d \n\n\r", (int) serviceNumber, 10, count);
 
 			// Load
 

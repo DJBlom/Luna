@@ -31,6 +31,7 @@ if(BUILD_LUNA)
     add_executable(${PROJECT_NAME}
         ${CMAKE_SOURCE_DIR}/startup/startup_stm32f411xe.s
         ${CMAKE_SOURCE_DIR}/source/main.cpp
+        ${CMAKE_SOURCE_DIR}/source/src/Logger.cpp
     )
 
     target_include_directories(${PROJECT_NAME} PRIVATE

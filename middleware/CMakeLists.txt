@@ -12,7 +12,7 @@ add_library(middleware STATIC
     ${PROJECT_SOURCE_DIR}/freertos/event_groups.c
     ${PROJECT_SOURCE_DIR}/freertos/list.c
     ${PROJECT_SOURCE_DIR}/freertos/queue.c
-    #    ${PROJECT_SOURCE_DIR}/freertos/stream_buffer.c
+    #${PROJECT_SOURCE_DIR}/freertos/stream_buffer.c
     ${PROJECT_SOURCE_DIR}/freertos/tasks.c
     ${PROJECT_SOURCE_DIR}/freertos/timers.c
     ${PROJECT_SOURCE_DIR}/freertos/portable/MemMang/heap_1.c

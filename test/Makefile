@@ -13,22 +13,22 @@ CPP_PLATFORM := -std=c++20
 
 SRC_DIRS :=\
 	$(PROJECT_DIR)/source/src\
-	$(TEST_DIR)/mocks/src
 	
 INCLUDE_DIRS :=\
 	$(CPPUTEST_HOME)/include\
 	$(PROJECT_DIR)/source/include\
-	$(TEST_DIR)/mocks/include
+	$(PROJECT_DIR)/utilities/interface\
+	$(TEST_DIR)/mocks/include\
 
 
 TEST_SRC_DIRS :=\
 	$(TEST_DIR)\
 	$(TEST_DIR)/tests\
-	$(TEST_DIR)/mocks
+	$(TEST_DIR)/mocks/src\
 
 
 CPPUTEST_USE_GCOV := Y
-#CPPUTEST_USE_EXTENSIONS := Y
+CPPUTEST_USE_EXTENSIONS := Y
 -include $(CPPUTEST_HOME)/build/MakefileWorker.mk
 
 
