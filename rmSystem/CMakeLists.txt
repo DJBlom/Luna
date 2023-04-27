@@ -11,9 +11,9 @@ add_library(rmSystem OBJECT
 target_include_directories(rmSystem PRIVATE
     ${PROJECT_SOURCE_DIR}/include/
     ${PROJECT_SOURCE_DIR}/../source/include/
-    ${PROJECT_SOURCE_DIR}/../utilities/include/
+    ${PROJECT_SOURCE_DIR}/../drivers/include/
     ${PROJECT_SOURCE_DIR}/../system/include/cmsis/
     ${PROJECT_SOURCE_DIR}/../system/include/stm32f4xx/
 )
 
-target_link_libraries(rmSystem PRIVATE middleware system utilities)
+target_link_libraries(rmSystem PRIVATE middleware system drivers)

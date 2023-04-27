@@ -10,16 +10,16 @@
  *******************************************************************************/
 #include <RmSystemWatchdog.h>
 
-bool ServiceIsRunning(uint16_t bitPosition)
-{
-    bool isRunning = false;
-	if (((*GetWatchdogMask() >> bitPosition) & 1U) == 1U)
-	{
-		isRunning = true;
-	}
-
-	return isRunning;
-}
+//bool ServiceIsRunning(uint16_t bitPosition)
+//{
+//    bool isRunning = false;
+//	if (((*GetWatchdogMask() >> bitPosition) & 1U) == 1U)
+//	{
+//		isRunning = true;
+//	}
+//
+//	return isRunning;
+//}
 
 
 bool SetServiceWatchdogBit(uint16_t serviceNumber)
@@ -29,16 +29,16 @@ bool SetServiceWatchdogBit(uint16_t serviceNumber)
 
 
 
-void vApplicationIdleHook( void )
-{
-	for (uint16_t i = 0; i < NUMBER_OF_SERVICES; i++)
-	{
-		if (ServiceIsRunning(i) == true)
-        {
-        }
-        else 
-        {
-            break;
-        }
-	}
-}
+//void vApplicationIdleHook( void )
+//{
+//	for (uint16_t i = 0; i < NUMBER_OF_SERVICES; i++)
+//	{
+//		if (ServiceIsRunning(i) == true)
+//        {
+//        }
+//        else 
+//        {
+//            break;
+//        }
+//	}
+//}

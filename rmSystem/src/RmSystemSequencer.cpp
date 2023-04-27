@@ -39,25 +39,25 @@ bool CoreSystemInitialization(void)
 
 
 
-void vApplicationTickHook( void )
-{
-	currentTickCount = xTaskGetTickCountFromISR();
-
-	if ((currentTickCount & SERVICE1_HZ) == ZERO)
-	{
-		xSemaphoreGiveFromISR(GetServiceSemaphore(ZERO), NULL);
-	}
-
-	if ((currentTickCount & SERVICE2_HZ) == ZERO)
-	{
-		xSemaphoreGiveFromISR(GetServiceSemaphore(ONE), NULL);
-	}
-
-	if ((currentTickCount & SERVICE3_HZ) == ZERO)
-	{
-		xSemaphoreGiveFromISR(GetServiceSemaphore(TWO), NULL);
-	}
-}
+//void vApplicationTickHook( void )
+//{
+//	currentTickCount = xTaskGetTickCountFromISR();
+//
+//	if ((currentTickCount & SERVICE1_HZ) == ZERO)
+//	{
+//		xSemaphoreGiveFromISR(GetServiceSemaphore(ZERO), NULL);
+//	}
+//
+//	if ((currentTickCount & SERVICE2_HZ) == ZERO)
+//	{
+//		xSemaphoreGiveFromISR(GetServiceSemaphore(ONE), NULL);
+//	}
+//
+//	if ((currentTickCount & SERVICE3_HZ) == ZERO)
+//	{
+//		xSemaphoreGiveFromISR(GetServiceSemaphore(TWO), NULL);
+//	}
+//}
 
 
 

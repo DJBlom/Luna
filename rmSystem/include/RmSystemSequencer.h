@@ -12,7 +12,6 @@ extern "C"
 {
 #endif
 #include <RmSystemConfiguration.h>
-#include "Logger.h"
 bool CoreSystemInitialization(void);
 #ifdef __cplusplus
 }

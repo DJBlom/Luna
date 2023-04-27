@@ -35,7 +35,7 @@ if(BUILD_LUNA)
     )
 
     target_include_directories(${PROJECT_NAME} PRIVATE
-        ${CMAKE_SOURCE_DIR}/utilities/include/
+        ${CMAKE_SOURCE_DIR}/drivers/include/
         ${CMAKE_SOURCE_DIR}/system/include/stm32f4xx/
         ${CMAKE_SOURCE_DIR}/rmSystem/include/
         ${CMAKE_SOURCE_DIR}/source/include/
@@ -62,9 +62,9 @@ if(BUILD_LUNA)
         target_link_libraries(${PROJECT_NAME} PRIVATE rmSystem)
     endif()
 
-    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/utilities)
-        add_subdirectory(utilities)
-        target_link_libraries(${PROJECT_NAME} PRIVATE utilities)
+    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/drivers)
+        add_subdirectory(drivers)
+        target_link_libraries(${PROJECT_NAME} PRIVATE drivers)
     endif()
 
     if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/system)
