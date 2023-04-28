@@ -1,45 +1,41 @@
 /*******************************************************************************
- * Contents: Implementation of the core systems getters and setters used to
- * relay data upon initialization.
+ * Contents: ConfigurationCoreSystem Module
  * Author: Dawid Blom.
  * Date: January 25, 2023.
  *
- * NOTE: CoreSystemMembers are used in all the core system files,
- * A.K.A CoreSystem, CoreSystemConfiguration, CoresystemServices, and
- * CoreSystemWatchdog.
+ * NOTE: This file contains the implementation of the setters and getters 
+ * defined in the ConfigurationCoreSystem.h file. 
+ * struct CoreSystemMembers is used to hold all the freeRTOS task handles and 
+ * semaphores used to create the tasks and help with synchronization.
+ *
+ * VARIABLES:
+ * static struct CoreSystemMembers coreSystemMembers: 
+ *      is used to provide access to the task handles and semaphores used in 
+ *      the core system.
+ *
+ * static uint8_t serviceHandleIndex: 
+ *      is a module variable used to keep track of the of all the service handles 
+ *      that are created when the system is initialized.
+ *
+ * static uint8_t serviceSemaphoreIndex:
+ *      is similar to that of the serviceHandleIndex except it keeps track of all 
+ *      the semaphores created for the system to aid in syncrhonization of the 
+ *      threads.
  *******************************************************************************/
-#include <RmSystemConfiguration.h>
+#include <ConfigurationCoreSystem.h>
 
 
 struct CoreSystemMembers
 {
-	uint16_t* watchdogMask;
 	TaskHandle_t* serviceHandle[NUMBER_OF_SERVICES];
 	SemaphoreHandle_t serviceSemaphore[NUMBER_OF_SERVICES];
 };
 
 
-struct CoreSystemMembers coreSystemMembers;
+static struct CoreSystemMembers coreSystemMembers;
 static uint8_t serviceHandleIndex = 0;
 static uint8_t serviceSemaphoreIndex = 0;
 
-
-bool SetWatchdogMask(uint16_t value)
-{
-	bool success = false;
-	if ((*coreSystemMembers.watchdogMask = value))
-	{
-		success = true;
-	}
-
-	return success;
-}
-
-
-uint16_t* GetWatchdogMask()
-{
-	return coreSystemMembers.watchdogMask;
-}
 
 
 bool SetServiceHandle(TaskHandle_t serviceHandle)

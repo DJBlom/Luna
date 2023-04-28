@@ -8,26 +8,18 @@
  * NOTE: It's important to note that this ISR is native to FreeRTOS and does not
  * require a definition, only an implementation.
  *******************************************************************************/
-#include <RmSystemConfiguration.h>
+#include <ConfigurationCoreSystem.h>
 
+static TickType_t currentTickCount = 0;
 
-void vApplicationIdleHook( void )
+void vApplicationIdleHook()
 {
-	for (uint16_t i = 0; i < NUMBER_OF_SERVICES; i++)
-	{
-		if (ServiceIsRunning(i) == true)
-        {
-        }
-        else 
-        {
-            break;
-        }
-	}
+    // Todo.
 }
 
 
 
-void vApplicationTickHook( void )
+void vApplicationTickHook()
 {
 	currentTickCount = xTaskGetTickCountFromISR();
 

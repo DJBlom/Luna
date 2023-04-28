@@ -1,14 +1,23 @@
 /*******************************************************************************
- * Contents: System configuration module that acts as data relay between the
- * core system and it's services.
+ * Contents: ConfigurationCoreSystem Module
  * Author: Dawid Blom.
  * Date: January 25, 2023.
  *
- * NOTE: A.K.A a bunch of setters and getters used by the core system and it's
- * services for initialization and sequencing.
+ * NOTE: This file contains the core system configuration and necessary 
+ * freeRTOS data to run multiple threads. Furthermore, we can access it 
+ * through controlled setters and getters provided in the module. 
+ *
+ * VARIABLES:
+ * enum Frequency: 
+ *      This enum is used to set the frequency at which the threads should be 
+ *      synchronized. Whether they should run at 50 Hz, 20Hz, or 10Hz, etc.
+ *
+ * enum Service: 
+ *      This enum is used to specify thread priority and aid in the 
+ *      synchronization of the threads.
  *******************************************************************************/
-#ifndef _RM_SYSTEM_CONFIGURATION_H_
-#define _RM_SYSTEM_CONFIGURATION_H_
+#ifndef _CONFIGURATION_CORE_SYSTEM_H_
+#define _CONFIGURATION_CORE_SYSTEM_H_
 #ifdef __cplusplus
 extern "C"
 {
@@ -23,14 +32,14 @@ extern "C"
 #define NUMBER_OF_SERVICES 3
 #define STACK_SIZE 500
 
-enum
+enum Frequency
 {
 	SERVICE1_HZ = 0x2,  // Fifty Hz
 	SERVICE2_HZ = 0x5,  // Ten Hz
 	SERVICE3_HZ = 0x10, // Five Hz
 };
 
-enum
+enum Services
 {
 	ZERO, 
     ONE, 
@@ -42,17 +51,12 @@ enum
 };
 
 
-bool SetWatchdogMask(uint16_t value);
-uint16_t* GetWatchdogMask(void);
-
 bool SetServiceHandle(TaskHandle_t serviceHandle);
 TaskHandle_t* GetServiceHandle(uint8_t serviceNumber);
 
 bool SetServiceSemaphore(SemaphoreHandle_t serviceSemaphore);
 SemaphoreHandle_t GetServiceSemaphore(uint8_t serviceNumber);
-
 #ifdef __cplusplus
 }
 #endif
-
 #endif

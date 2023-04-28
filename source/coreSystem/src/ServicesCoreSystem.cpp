@@ -1,41 +1,12 @@
 /*******************************************************************************
- * Contents: Implementation of the system service creation function and services.
+ * Contents: ServiceCoreSystem Module
  * Author: Dawid Blom.
  * Date: January 20, 2023.
  *
- * NOTE:
+ * NOTE: Implementation of the system service creation function and services.
  *******************************************************************************/
-#include <RmSystemServices.h>
-
-
+#include <ServicesCoreSystem.h>
 #define TRUE 1
-
-bool CreateSystemServices(void)
-{
-	BaseType_t task;
-    bool success = true;
-
-	task = xTaskCreate(Service1, "Service1", STACK_SIZE, (void*) ONE, configMAX_PRIORITIES - ONE, GetServiceHandle(ZERO));
-	if (task == pdFAIL)
-	{
-		success = false;
-	}
-
-	task = xTaskCreate(Service2, "Service2", STACK_SIZE, (void*) TWO, configMAX_PRIORITIES - TWO, GetServiceHandle(ONE));
-	if (task == pdFAIL)
-	{
-		success = false;
-	}
-
-	task = xTaskCreate(Service3, "Service3", STACK_SIZE, (void*) THREE, configMAX_PRIORITIES - THREE, GetServiceHandle(TWO));
-	if (task == pdFAIL)
-	{
-		success = false;
-	}
-
-	return success;
-}
-
 
 
 void Service1(void* serviceNumber)
@@ -51,8 +22,7 @@ void Service1(void* serviceNumber)
             service1.LogMessage(uart2, " %d: Running @: %dHz | Serviced: %d \n\n\r", (int) serviceNumber, 50, count);
 
 			// Load
-
-			SetServiceWatchdogBit(ZERO);
+            // Watchdog
 		}
 	}
 }
@@ -72,8 +42,7 @@ void Service2(void* serviceNumber)
             service2.LogMessage(uart2, " %d: Running @: %dHz | Serviced: %d \n\n\r", (int) serviceNumber, 20, count);
 
 			// Load
-
-			SetServiceWatchdogBit(ONE);
+            // Watchdog
 		}
 	}
 }
@@ -93,8 +62,7 @@ void Service3(void* serviceNumber)
             service3.LogMessage(uart2, " %d: Running @: %dHz | Serviced: %d \n\n\r", (int) serviceNumber, 10, count);
 
 			// Load
-
-			SetServiceWatchdogBit(TWO);
+            // Watchdog
 		}
 	}
 }

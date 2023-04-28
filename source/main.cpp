@@ -5,8 +5,7 @@
  *
  * Note: 
  *******************************************************************************/
-#include "RmSystemSequencer.h"
-#include "RmSystemServices.h"
+#include "InitializeCoreSystem.h"
 #include "Peripherals.h"
 #include "Logger.h"
 #include "Uart2.h"
@@ -23,7 +22,7 @@ int main(void)
     System::Peripherals peripherals;
     peripherals.Initialize();
 
-    // Enable the green user LED
+    // Set the gpioa mode for the green user LED
     GPIOA->MODER = GPIOA->MODER | (1U << 10);
 
 
@@ -32,9 +31,9 @@ int main(void)
     System::Logger logger{"System: "};
     logger.LogMessage(uart2, "Restarted \n\n\r");
 
-    if (CoreSystemInitialization() == true)
+    if (CoreSystemInitialized())
     {
-        if (CreateSystemServices() == true)
+        if (SystemServicesCreated())
         {
             vTaskStartScheduler();
         }

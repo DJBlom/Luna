@@ -5,7 +5,6 @@ project(Luna VERSION 0.0.1 LANGUAGES CXX C ASM)
 option(USE_RTOS "Enable RTOS support" OFF)
 option(BUILD_LUNA "Building Luna" OFF)
 
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmakeModules)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -31,15 +30,11 @@ if(BUILD_LUNA)
     add_executable(${PROJECT_NAME}
         ${CMAKE_SOURCE_DIR}/startup/startup_stm32f411xe.s
         ${CMAKE_SOURCE_DIR}/source/main.cpp
-        ${CMAKE_SOURCE_DIR}/source/src/Logger.cpp
     )
 
     target_include_directories(${PROJECT_NAME} PRIVATE
-        ${CMAKE_SOURCE_DIR}/drivers/include/
-        ${CMAKE_SOURCE_DIR}/system/include/stm32f4xx/
-        ${CMAKE_SOURCE_DIR}/rmSystem/include/
-        ${CMAKE_SOURCE_DIR}/source/include/
-        ${CMAKE_SOURCE_DIR}/source/
+        ${CMAKE_SOURCE_DIR}/source/coreSystem/include/
+        ${CMAKE_SOURCE_DIR}/source/features/include/
     )
 
     set(LINKER_SCRIPTS
@@ -57,9 +52,14 @@ if(BUILD_LUNA)
         LINKER:-Map,${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.map
     )
 
-    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/rmSystem)
-        add_subdirectory(rmSystem)
-        target_link_libraries(${PROJECT_NAME} PRIVATE rmSystem)
+    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/source/features)
+        add_subdirectory(${CMAKE_SOURCE_DIR}/source/features)
+        target_link_libraries(${PROJECT_NAME} PRIVATE features)
+    endif()
+
+    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/source/coreSystem)
+        add_subdirectory(${CMAKE_SOURCE_DIR}/source/coreSystem)
+        target_link_libraries(${PROJECT_NAME} PRIVATE coreSystem)
     endif()
 
     if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/drivers)

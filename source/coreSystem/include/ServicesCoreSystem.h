@@ -1,29 +1,23 @@
 /*******************************************************************************
- * Contents: System service creation function and services.
+ * Contents: ServiceCoreSystem Module
  * Author: Dawid Blom.
  * Date: January 20, 2023.
  *
- * NOTE:
+ * NOTE: An interface to all the services used in the system.
  *******************************************************************************/
-#ifndef _RM_SYSTEM_SERVICES_H_
-#define _RM_SYSTEM_SERVICES_H_
+#ifndef _SERVICES_CORE_SYSTEM_H_
+#define _SERVICES_CORE_SYSTEM_H_
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-#include <RmSystemConfiguration.h>
-#include <RmSystemWatchdog.h>
+#include "ConfigurationCoreSystem.h"
 #include "Logger.h"
 #include "Uart2.h"
 
-bool CreateSystemServices(void);
 void Service1(void* p);
 void Service2(void* p);
 void Service3(void* p);
-void Service4(void* p);
-void Service5(void* p);
-void Service6(void* p);
-
 #ifdef __cplusplus
 }
 #endif

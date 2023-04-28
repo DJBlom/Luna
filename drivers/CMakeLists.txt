@@ -9,12 +9,12 @@ add_library(drivers OBJECT
 
 target_include_directories(drivers INTERFACE
     ${PROJECT_SOURCE_DIR}/include/
-    ${PROJECT_SOURCE_DIR}/interface/
+    ${PROJECT_SOURCE_DIR}/../system/cmsis/include/
+    ${PROJECT_SOURCE_DIR}/../system/stm32f4xx/include/
 )
 
 target_include_directories(drivers PRIVATE
     ${PROJECT_SOURCE_DIR}/include/
-    ${PROJECT_SOURCE_DIR}/interface/
 )
 
 target_link_libraries(drivers PRIVATE system)

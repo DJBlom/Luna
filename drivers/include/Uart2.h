@@ -9,7 +9,6 @@
  *******************************************************************************/
 #ifndef _UART_2_H_ 
 #define _UART_2_H_ 
-#include "stm32f411xe.h"
 #include "Uart.h"
 #include <cstring>
 namespace Comm {
