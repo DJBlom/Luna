@@ -11,6 +11,7 @@
 #define _UART_2_H_ 
 #include "Uart.h"
 #include <cstring>
+#include "stm32f411xe.h"
 namespace Comm {
     class Uart2: public Interface::Uart {
         public:

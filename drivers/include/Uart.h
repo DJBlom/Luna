@@ -9,7 +9,6 @@
 #ifndef _UART_H_ 
 #define _UART_H_ 
 #include <cstdint>
-#include "stm32f411xe.h"
 namespace Interface {
     class Uart {
         public:
