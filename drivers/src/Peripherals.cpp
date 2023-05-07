@@ -17,14 +17,23 @@ void System::Peripherals::Initialize()
 
 void System::Peripherals::RccInitialization()
 {
+    // GPIOs
     RCC->AHB1ENR = RCC->AHB1ENR | RCC_AHB1ENR_GPIOAEN;
+    RCC->AHB1ENR = RCC->AHB1ENR | RCC_AHB1ENR_GPIOBEN;
+
+    // COMMs
     RCC->APB1ENR = RCC->APB1ENR | RCC_APB1ENR_USART2EN; 
+    RCC->APB1ENR = RCC->APB1ENR | RCC_APB1ENR_I2C1EN; 
+
+    // DMAs
     RCC->AHB1ENR = RCC->AHB1ENR | RCC_AHB1ENR_DMA1EN;
 }
 
 
 void System::Peripherals::EnableIRQHandlers()
 {
-    NVIC_SetPriority(DMA1_Stream6_IRQn, 3);
+    NVIC_SetPriority(DMA1_Stream6_IRQn, 2);
+    NVIC_SetPriority(DMA1_Stream5_IRQn, 1);
+    NVIC_EnableIRQ(DMA1_Stream5_IRQn);
     NVIC_EnableIRQ(DMA1_Stream6_IRQn);
 }

@@ -1,12 +1,15 @@
 /*******************************************************************************
- * Contents: Implementation of the core system initialization function.
- * Additionally, there is a FreeRTOS specific ISR at the bottom called
- * vApplicationTickHook, and is used as a sequencer.
+ * Contents: vApplicationIdleHook and vApplicationTickHook Functions
  * Author: Dawid Blom.
  * Date: January 15, 2023.
  *
- * NOTE: It's important to note that this ISR is native to FreeRTOS and does not
- * require a definition, only an implementation.
+ * NOTE: It's important to note that both the vApplicationIdleHook and 
+ *       vApplicationTickHook ISRs are native to FreeRTOS and does not require 
+ *       a definition, only an implementation.
+ *
+ * IDEA:
+ *      The idea is that vApplicationIdleHook performs watchdog related resets
+ *      and vApplicationTickHook is used to synchronize the tasks.
  *******************************************************************************/
 #include <ConfigurationCoreSystem.h>
 
