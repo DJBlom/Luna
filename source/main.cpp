@@ -11,6 +11,9 @@
 #include "Uart2.h"
 
 
+#include "stm32f411xe.h"
+
+
 
 
 
@@ -50,12 +53,13 @@ int main(void)
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_TCIE;
 
     DMA1_Stream5->CR = DMA1_Stream5->CR | DMA_SxCR_CHSEL_1;
-    DMA1_Stream5->CR = DMA1_Stream5->CR | DMA_SxCR_PINC;
+    DMA1_Stream5->CR = DMA1_Stream5->CR | DMA_SxCR_MINC;
     DMA1_Stream5->CR = DMA1_Stream5->CR & ~DMA_SxCR_DIR_0;
     DMA1_Stream5->CR = DMA1_Stream5->CR | DMA_SxCR_TCIE;
 
     // Configure I2C1 
-
+    I2C1->CR2 = I2C1->CR2 | I2C_CR2_LAST;
+    I2C1->CR2 = I2C1->CR2 | I2C_CR2_DMAEN;
 
     Comm::Uart2 uart2;
     System::Logger logger{"System: "};
