@@ -36,6 +36,14 @@ int main(void)
     GPIOB->MODER = GPIOB->MODER & ~GPIO_MODER_MODER9_0; 
     GPIOB->MODER = GPIOB->MODER | GPIO_MODER_MODER9_1; 
 
+    // Configure open-drain for both GPIO 8 and 9.
+    GPIOB->OTYPER = GPIOB->OTYPER | GPIO_OTYPER_OT8;
+    GPIOB->OTYPER = GPIOB->OTYPER | GPIO_OTYPER_OT9;
+
+    // Configure high speed.
+    GPIOB->OSPEEDR = GPIOB->OSPEEDR | GPIO_OSPEEDR_OSPEED8_1;
+    GPIOB->OSPEEDR = GPIOB->OSPEEDR | GPIO_OSPEEDR_OSPEED9_1;
+
     GPIOB->AFR[1] = GPIOB->AFR[1] & ~GPIO_AFRH_AFSEL8_0;
     GPIOB->AFR[1] = GPIOB->AFR[1] | GPIO_AFRH_AFSEL8_1;
     GPIOB->AFR[1] = GPIOB->AFR[1] & ~GPIO_AFRH_AFSEL8_2;
@@ -57,9 +65,34 @@ int main(void)
     DMA1_Stream5->CR = DMA1_Stream5->CR & ~DMA_SxCR_DIR_0;
     DMA1_Stream5->CR = DMA1_Stream5->CR | DMA_SxCR_TCIE;
 
-    // Configure I2C1 
-    I2C1->CR2 = I2C1->CR2 | I2C_CR2_LAST;
+    // General Initialization of I2C1
+    I2C1->CR1 = I2C1->CR1 | I2C_CR1_SWRST;
+    I2C1->CR1 = I2C1->CR1 & ~I2C_CR1_SWRST;
+    I2C1->CR1 = I2C1->CR1 & ~I2C_CR1_NOSTRETCH;
+    I2C1->CR1 = I2C1->CR1 & ~I2C_CR1_ENGC;
     I2C1->CR2 = I2C1->CR2 | I2C_CR2_DMAEN;
+    I2C1->CR2 = I2C1->CR2 | I2C_CR2_FREQ_5;
+    I2C1->CR2 = I2C1->CR2 | I2C_CR2_LAST;
+    I2C1->CCR = I2C1->CCR | I2C_CCR_CCR;
+    I2C1->TRISE = I2C1->TRISE | I2C_TRISE_TRISE;
+    I2C1->CR1 = I2C1->CR1 | I2C_CR1_PE;
+
+
+    // I2C1 Transfer
+//    I2C1->CR1 = I2C1->CR1 | I2C_CR1_START;
+//    I2C1->CR1 = I2C1->CR1 | I2C_CR1_STOP;
+
+//    I2C1->CR1 = I2C1->CR1 | I2C_CR1_ACK;
+//    I2C1->CR1 = I2C1->CR1 | I2C_CR1_PEC;
+//    I2C1->CR1 = I2C1->CR1 | I2C_CR1_POS;
+
+//
+
+
+//    I2C1->CR2 = I2C1->CR2 | I2C_CR2_ITEVTEN;
+//    I2C1->CR2 = I2C1->CR2 | I2C_CR2_ITBUFEN;
+
+
 
     Comm::Uart2 uart2;
     System::Logger logger{"System: "};
