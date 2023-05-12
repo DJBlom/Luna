@@ -25,6 +25,7 @@ extern "C"
     {
         if (DMA1->HISR & DMA_HISR_TCIF5)
         {
+            I2C1->CR1 = I2C1->CR1 | I2C_CR1_STOP;
             DMA1->HIFCR = DMA1->HIFCR | DMA_HIFCR_CTCIF5;
             DMA1_Stream5->CR = DMA1_Stream5->CR & ~DMA_SxCR_EN;
         }
