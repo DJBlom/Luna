@@ -36,20 +36,20 @@ int main(void)
 
 
 
-//    std::uint8_t* data = (std::uint8_t*)"c";
-//
-//    // I2C1 Transfer function
-//    while (1)
-//    {
-//        i2c1.Write(mainSlaveAddress, data, 1);
-//
-//        for (int i = 0; i < 50000; i++)
-//        {
-//
-//        }
-//
-//        i2c1.Read(mainSlaveAddress, outSlaveAddress, data, 1);
-//    }
+    std::uint8_t* data = (std::uint8_t*)"c";
+
+    // I2C1 Transfer function
+    while (1)
+    {
+        i2c1.Write(mainSlaveAddress, data, 1);
+
+        for (int i = 0; i < 50000; i++)
+        {
+
+        }
+
+        i2c1.Read(mainSlaveAddress, outSlaveAddress, data, 1);
+    }
 
 
     
@@ -68,25 +68,25 @@ int main(void)
 
 
 
-    Comm::Uart2 uart2;
-    System::Logger logger{"System: "};
-    logger.LogMessage(uart2, "Restarted \n\n\r");
-
-    if (CoreSystemInitialized())
-    {
-        if (SystemServicesCreated())
-        {
-            vTaskStartScheduler();
-        }
-        else
-        {
-            logger.LogMessage(uart2, "Service Creation FAILED \n\n\r");
-        }
-    }
-    else
-    {
-        logger.LogMessage(uart2, "Initialization FAILED \n\n\r");
-    }
+//    Comm::Uart2 uart2;
+//    System::Logger logger{"System: "};
+//    logger.LogMessage(uart2, "Restarted \n\n\r");
+//
+//    if (CoreSystemInitialized())
+//    {
+//        if (SystemServicesCreated())
+//        {
+//            vTaskStartScheduler();
+//        }
+//        else
+//        {
+//            logger.LogMessage(uart2, "Service Creation FAILED \n\n\r");
+//        }
+//    }
+//    else
+//    {
+//        logger.LogMessage(uart2, "Initialization FAILED \n\n\r");
+//    }
 
     return 0;
 }

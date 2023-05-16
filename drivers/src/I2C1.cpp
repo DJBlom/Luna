@@ -145,6 +145,7 @@ bool Comm::I2c1::DmaWrite(std::uint8_t* data, std::uint32_t len)
 
 bool Comm::I2c1::DmaRead(std::uint8_t* data, std::uint32_t len)
 {
+    DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_CHSEL_0;
     DMA1_Stream6->M0AR = (std::uint32_t)data;
     DMA1_Stream6->PAR = (std::uint32_t)&I2C1->DR;
     DMA1_Stream6->NDTR = (std::uint8_t)len;
@@ -175,7 +176,6 @@ void Comm::I2c1::I2C1Initialize()
 void Comm::I2c1::Dma1Initialize()
 {
     // Configure the DMA transmit
-//    DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_CHSEL_0;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_MINC;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_DIR_0;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_TCIE;
