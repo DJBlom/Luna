@@ -15,7 +15,7 @@ namespace Comm {
             I2c1& operator= (I2c1&&) = default;
             ~I2c1() = default;
 
-            virtual bool Write(std::uint8_t slaveAddress, std::uint8_t* data, std::uint16_t len) override;
+            virtual bool Write(std::uint8_t slaveAddress, std::uint8_t deviceRegister, std::uint8_t* data, std::uint16_t len) override;
             virtual std::uint8_t* Read(std::uint8_t slaveAddress, std::uint8_t registerAddress, std::uint8_t* data, std::uint16_t len) override;
 
         protected:

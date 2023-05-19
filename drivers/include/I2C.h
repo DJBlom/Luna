@@ -8,7 +8,7 @@ namespace Interface {
         public:
             virtual ~I2C() = default;
 
-            virtual bool Write(std::uint8_t slaveAddress, std::uint8_t* data, std::uint16_t len) = 0;
+            virtual bool Write(std::uint8_t slaveAddress, std::uint8_t deviceRegister, std::uint8_t* data, std::uint16_t len) = 0;
             virtual std::uint8_t* Read(std::uint8_t slaveAddress, std::uint8_t registerAddress, std::uint8_t* data, std::uint16_t len) = 0;
     };
 }

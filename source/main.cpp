@@ -18,7 +18,7 @@
 
 
 constexpr std::uint8_t mainSlaveAddress{0x68};
-constexpr std::uint8_t outSlaveAddress{0x3B};
+constexpr std::uint8_t outSlaveAddress{0x1C};
 
 
 
@@ -41,14 +41,15 @@ int main(void)
     // I2C1 Transfer function
     while (1)
     {
-        i2c1.Write(mainSlaveAddress, data, 1);
+        i2c1.Write(mainSlaveAddress, outSlaveAddress, data, 1);
 
         for (int i = 0; i < 50000; i++)
         {
 
         }
 
-        i2c1.Read(mainSlaveAddress, outSlaveAddress, data, 1);
+
+//        i2c1.Read(mainSlaveAddress, outSlaveAddress, data, 1);
     }
 
 
