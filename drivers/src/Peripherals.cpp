@@ -34,6 +34,7 @@ void System::Peripherals::EnableIRQHandlers()
 {
     NVIC_SetPriority(DMA1_Stream6_IRQn, 2);
     NVIC_SetPriority(DMA1_Stream5_IRQn, 1);
-    NVIC_EnableIRQ(DMA1_Stream5_IRQn);
+
     NVIC_EnableIRQ(DMA1_Stream6_IRQn);
+    NVIC_EnableIRQ(DMA1_Stream5_IRQn);
 }
