@@ -16,11 +16,21 @@ extern "C"
     {
         if (DMA1->HISR & DMA_HISR_TCIF6)
         {
-            GPIOA->ODR = GPIOA->ODR | (1U << 5);
-            I2C1->CR1 = I2C1->CR1 | I2C_CR1_STOP;
+//            GPIOA->ODR = GPIOA->ODR | (1U << 5);
+//            I2C1->CR1 = I2C1->CR1 | I2C_CR1_STOP;
             DMA1->HIFCR = DMA1->HIFCR | DMA_HIFCR_CTCIF6;
             DMA1_Stream6->CR = DMA1_Stream6->CR & ~DMA_SxCR_EN;
+        }
+    }
 
+    void DMA1_Stream7_IRQHandler()
+    {
+        if (DMA1->HISR & DMA_HISR_TCIF7)
+        {
+            GPIOA->ODR = GPIOA->ODR | (1U << 5);
+            I2C1->CR1 = I2C1->CR1 | I2C_CR1_STOP;
+            DMA1->HIFCR = DMA1->HIFCR | DMA_HIFCR_CTCIF7;
+            DMA1_Stream7->CR = DMA1_Stream7->CR & ~DMA_SxCR_EN;
         }
     }
 

@@ -46,12 +46,12 @@ bool Comm::Uart2::TransmissionIsComplete()
 bool Comm::Uart2::LoadData(const char* data)
 {
     bool isDataLoaded{false};
-    DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_CHSEL_2;
-    DMA1_Stream6->M0AR = (std::uint32_t)data;
-    DMA1_Stream6->PAR = (std::uint32_t)&USART2->DR;
-    DMA1_Stream6->NDTR = this->dataLength;
     if (USART2->SR & USART_SR_TXE)
     {
+        DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_CHSEL_2;
+        DMA1_Stream6->M0AR = (std::uint32_t)data;
+        DMA1_Stream6->PAR = (std::uint32_t)&USART2->DR;
+        DMA1_Stream6->NDTR = this->dataLength;
         isDataLoaded = true;
     }
 
@@ -86,7 +86,7 @@ void Comm::Uart2::Uart2Initialize()
 
 void Comm::Uart2::Dma1Initialize()
 {
-    DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_CHSEL_2;
+    DMA1_Stream5->CR = DMA1_Stream5->CR & ~DMA_SxCR_EN;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_MINC;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_DIR_0;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_TCIE;

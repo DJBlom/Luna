@@ -21,7 +21,7 @@ constexpr std::uint8_t mainSlaveAddress{0xD0};
 constexpr std::uint8_t outSlaveAddress{0x1C};
 constexpr std::uint8_t whoAmi{0x75};
 
-std::uint8_t buffer{0x89};
+std::uint8_t* buffer{0};
 
 
 
@@ -31,17 +31,13 @@ int main(void)
     System::Peripherals peripherals;
     peripherals.Initialize();
 
-    Comm::I2c1 i2c1;
+//    Comm::I2c1 i2c1;
 
     // Set the gpioa mode for the green user LED
     GPIOA->MODER = GPIOA->MODER | (1U << 10);
     Comm::Uart2 uart2;
     System::Logger logger{"System: "};
     logger.LogMessage(uart2, "Restarted \n\n\r");
-    for (int i = 0; i < 500000; i++)
-    {
-    }
-
 
 
 
@@ -55,13 +51,11 @@ int main(void)
 //    }
 
     // Power
-//    i2c1.Write(mainSlaveAddress, 0x6B, buffer, 2);
-//    for (int i = 0; i < 10000; i++)
-//    {
-//    }
-//    i2c1.Write(mainSlaveAddress, 0x6B, buffer, 2);
+    buffer = (std::uint8_t*)"Hello World";
+    i2c1.Write(mainSlaveAddress, 0x6B , buffer, 1);
+    i2c1.Write(mainSlaveAddress, 0x6B, buffer, 1);
 //    GPIOA->ODR = GPIOA->ODR | (1U << 5);
-//    for (int i = 0; i < 10000; i++)
+//    for (int i = 0; i < 500000; i++)
 //    {
 //    }
 
@@ -94,12 +88,8 @@ int main(void)
 //    std::uint8_t* data = (std::uint8_t*)"c";
 
     // I2C1 Transfer function
-    while (1)
-    {
-        i2c1.Write(mainSlaveAddress, 0x6B, buffer, 2);
-        for (int i = 0; i < 900000; i++)
-        {
-        }
+//    while (1)
+//    {
 //        i2c1.Write(mainSlaveAddress, outSlaveAddress, data, 1);
 
 //        for (int i = 0; i < 50000; i++)
@@ -108,8 +98,8 @@ int main(void)
 //        }
 
 
-        i2c1.Read(mainSlaveAddress, whoAmi, buffer, 3);
-    }
+//        i2c1.Read(mainSlaveAddress, whoAmi, buffer, 1);
+//    }
 
 
     
