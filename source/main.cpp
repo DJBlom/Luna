@@ -21,7 +21,10 @@ constexpr std::uint8_t mainSlaveAddress{0xD0};
 constexpr std::uint8_t outSlaveAddress{0x1C};
 constexpr std::uint8_t whoAmi{0x75};
 
-std::uint8_t buffer{0x89};
+std::int16_t* buffer{0};
+
+
+
 
 
 
@@ -44,8 +47,8 @@ int main(void)
 
 
 
-
-//    std::uint8_t* deviceAddress = i2c1.Read(mainSlaveAddress, whoAmi, buffer, 1);
+//    std::int16_t* data =  i2c1.Read(mainSlaveAddress, whoAmi, buffer, 1);
+    
 //    for (int i = 0; i < 500000; i++)
 //    {
 //    }
@@ -59,56 +62,42 @@ int main(void)
 //    for (int i = 0; i < 10000; i++)
 //    {
 //    }
-//    i2c1.Write(mainSlaveAddress, 0x6B, buffer, 2);
-//    GPIOA->ODR = GPIOA->ODR | (1U << 5);
-//    for (int i = 0; i < 10000; i++)
-//    {
-//    }
 
 //    // Sample rate
-//    buffer = (std::uint8_t*)0x07;
+//    buffer[0] = 0x07;
 //    i2c1.Write(mainSlaveAddress, 0x19, buffer, 1);
 //    for (int i = 0; i < 500000; i++)
 //    {
 //    }
 //
 //    // Config gyro
-//    buffer = 0x00;
+//    buffer[0] = 0x00;
 //    i2c1.Write(mainSlaveAddress, 0x1A, buffer, 1);
 //    for (int i = 0; i < 500000; i++)
 //    {
 //    }
-//
-//    std::uint8_t* data = i2c1.Read(mainSlaveAddress, 0x43, buffer, 6);
-//    for (int i = 0; i < 500000; i++)
-//    {
-//    }
-//
-//    std::uint16_t x = (std::int16_t)(data[0] << 8 | data[1]);
-//    std::uint16_t y = (std::int16_t)(data[2] << 8 | data[3]);
-//    std::uint16_t z = (std::int16_t)(data[4] << 8 | data[5]);
-//
-//    logger.LogMessage(uart2, "X, Y, Z: %x \n\n\r", (x / 131), (y / 131), (z / 131));
 
+//    GPIOA->ODR = GPIOA->ODR | (1U << 5);
+//    data = i2c1.Read(mainSlaveAddress, 0x43, buffer, 6);
+//    std::int16_t x = (std::int16_t)(data[0] << 8 | data[1]);
+//    std::int16_t y = (std::int16_t)(data[2] << 8 | data[3]);
+//    std::int16_t z = (std::int16_t)(data[4] << 8 | data[5]);
+//
+//    logger.LogMessage(uart2, "X = %d, Y = %d, Z = %d \n\n\r", (x / 131), (y / 131), (z / 131));
 
-//    std::uint8_t* data = (std::uint8_t*)"c";
+    i2c1.Read(mainSlaveAddress, whoAmi, buffer, 1);
+    for (int i = 0; i < 500000; i++)
+    {
+    }
+    i2c1.Read(mainSlaveAddress, whoAmi, buffer, 1);
 
-    // I2C1 Transfer function
+    std::int32_t dataTransferred = 0xffff - DMA_SxNDT;
+
+    logger.LogMessage(uart2, "Data returned from MPU 6050: %x | Number of Data Items Transferred: %d \n\n\r", buffer[0], dataTransferred);
+
     while (1)
     {
-        i2c1.Write(mainSlaveAddress, 0x6B, buffer, 2);
-        for (int i = 0; i < 900000; i++)
-        {
-        }
-//        i2c1.Write(mainSlaveAddress, outSlaveAddress, data, 1);
-
-//        for (int i = 0; i < 50000; i++)
-//        {
-//
-//        }
-
-
-        i2c1.Read(mainSlaveAddress, whoAmi, buffer, 3);
+    //    i2c1.Read(mainSlaveAddress, whoAmi, buffer, 1);
     }
 
 

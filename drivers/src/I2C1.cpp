@@ -9,6 +9,7 @@
 
 
 
+
 Comm::I2c1::I2c1()
 {
     GpioInitialize();
@@ -17,141 +18,92 @@ Comm::I2c1::I2c1()
 }
 
 
-bool Comm::I2c1::Write(std::uint8_t slaveAddress, std::uint8_t deviceRegister, std::uint8_t data, std::uint16_t len)
+bool Comm::I2c1::Write(std::uint8_t slaveAddress, std::uint8_t address, std::int16_t* data, std::uint16_t len)
 {
     bool writeSuccess{false};
+    i2cTx = 1;
 
     // Wait till the line is not busy
-    while ((I2C1->SR2 & I2C_SR2_BUSY))
+    if ((I2C1->SR2 & I2C_SR2_BUSY) == 0)
     {
+        registerAddress[0] = slaveAddress;
+        registerAddress[1] = address;
+
+        DMA1_Stream7->M0AR = (std::uint32_t)data;
+        DMA1_Stream7->PAR = (std::uint32_t)&I2C1->DR;
+        DMA1_Stream7->NDTR = len;
+
+        I2C1->CR1 = I2C1->CR1 | I2C_CR1_START;
     }
-        
-    // Enable master mode by sending a start condition.
-    I2C1->CR1 = I2C1->CR1 | I2C_CR1_START;
-
-    // Wait till the start bit was generated
-    while (!(I2C1->SR1 & I2C_SR1_SB))
-    {
-    }
-
-    //Send slave address as a "Write" (I still need to get the slave address from sensor)
-    I2C1->DR = slaveAddress;
-
-
-    // Wait for address flag to be set
-    while (!(I2C1->SR1 & I2C_SR1_ADDR))
-    {
-    }
-    I2C1->SR2;
-    I2C1->DR = deviceRegister;
-
-
-
-    // Send the specific register we want to write to.
-
-
-    // If the previous transfer is complete
-    if (I2C1->SR2 & I2C_SR1_BTF)
-    {
-        // Load the data into the dma if the I2C shift register is empty
-        if (DmaWrite(data, len))
-        {
-            // Enable the DMA to transfer the data
-            DMA1_Stream7->CR = DMA1_Stream7->CR | DMA_SxCR_EN;
-            writeSuccess = true;
-        }
-    }
+    writeSuccess = true;
 
     return writeSuccess;
 }
 
 
-std::uint8_t* Comm::I2c1::Read(std::uint8_t slaveAddress, std::uint8_t registerAddress, std::uint8_t data, std::uint16_t len)
+void Comm::I2c1::Read(std::uint8_t slaveAddress, std::uint8_t address, std::int16_t* data, std::uint16_t len)
 {
-    std::uint8_t* buffer = {0};
-
-    data++;
-
-    // Wait till the line is not busy
-    while (I2C1->SR2 & I2C_SR2_BUSY)
+    i2cTx = 0;
+    if ((I2C1->SR2 & I2C_SR2_BUSY) == 0)
     {
-    }
+        GPIOA->ODR = GPIOA->ODR | (1U << 5);
+        registerAddress[0] = slaveAddress;
+        registerAddress[1] = address;
+        registerAddress[2] = slaveAddress + 1;
 
-    // Start 
+        DMA1_Stream5->M0AR = (std::uint32_t)data;
+        DMA1_Stream5->PAR = (std::uint32_t)&I2C1->DR;
+        DMA1_Stream5->NDTR = len;
+//        len++;
+//        data++;
+
+
+        Start();
+        SendAddress(slaveAddress);
+        SendRegAddress(address);
+
+
+        Start();
+        I2C1->CR1 = I2C1->CR1 & ~I2C_CR1_ACK;
+
+        SendAddress(slaveAddress + 1);
+
+
+
+
+        while ((I2C1->SR1 & I2C_SR1_RXNE) == 0) {}
+        DMA1_Stream5->CR = DMA1_Stream5->CR | DMA_SxCR_EN;
+//        I2C1->CR1 = I2C1->CR1 | I2C_CR1_STOP;
+//        GPIOA->ODR = GPIOA->ODR ^ (1U << 5);
+    }
+}
+
+void Comm::I2c1::Start()
+{
+    I2C1->CR1 = I2C1->CR1 | I2C_CR1_ACK;
     I2C1->CR1 = I2C1->CR1 | I2C_CR1_START;
-
-    // Wait till the start bit was generated
-    while (!(I2C1->SR1 & I2C_SR1_SB))
-    {
-    }
-
-    // Send slave address with a "write" (don't know the address yet)
-    I2C1->DR = slaveAddress;
-
-    // Wait for address flag to be set
-    while (!(I2C1->SR1 & I2C_SR1_ADDR))
-    {
-    }
-
-    // Read to clear flags
-    I2C1->SR2;
-
-    I2C1->DR = registerAddress;
-
-    while (!(I2C1->SR1 & I2C_SR1_BTF))
-    {
-    }
-
-    // Start 
-    I2C1->CR1 = I2C1->CR1 | I2C_CR1_START;
-
-    // Wait till the start bit was generated
-    while (!(I2C1->SR1 & I2C_SR1_SB))
-    {
-    }
-
-    // Send slave address with a "read" (don't know the address yet)
-    I2C1->DR = slaveAddress + 1;
-
-    // Wait for address flag to be set
-    while (!(I2C1->SR1 & I2C_SR1_ADDR))
-    {
-    }
-
-    // Read to clear flags
-    I2C1->SR2;
-    DmaRead(buffer, len);
-
-    return buffer;
+    while ((I2C1->SR1 & I2C_SR1_SB) == 0) {}
 }
 
-
-bool Comm::I2c1::DmaWrite(std::uint8_t data, std::uint32_t len)
+void Comm::I2c1::SendRegAddress(std::uint8_t address)
 {
-    bool isDataLoaded{false};
-    if (I2C1->SR1 & I2C_SR1_TXE)
-    {
-        DMA1_Stream7->M0AR = (std::uint32_t)&data;
-        DMA1_Stream7->PAR = (std::uint32_t)&I2C1->DR;
-        DMA1_Stream7->NDTR = len;
-        isDataLoaded = true;
-    }
-
-
-    return isDataLoaded;
+    while ((I2C1->SR1 & I2C_SR1_TXE) == 0) {}
+    I2C1->DR = address;
+    while ((I2C1->SR1 & I2C_SR1_TXE) == 0) {}
 }
 
-
-bool Comm::I2c1::DmaRead(std::uint8_t* data, std::uint32_t len)
+void Comm::I2c1::SendAddress(std::uint8_t address)
 {
-    DMA1_Stream3->M0AR = (std::uint32_t)data;
-    DMA1_Stream3->PAR = (std::uint32_t)&I2C1->DR;
-    DMA1_Stream3->NDTR = len;
-    DMA1_Stream3->CR = DMA1_Stream6->CR | DMA_SxCR_EN;
-
-    return true;
+    I2C1->DR = address;
+    while ((I2C1->SR1 & I2C_SR1_ADDR) == 0) {}
+    I2C1->SR2;
 }
 
+void Comm::I2c1::Stop()
+{
+    I2C1->CR1 = I2C1->CR1 | I2C_CR1_STOP;
+}
+            
 
 void Comm::I2c1::I2C1Initialize()
 {
@@ -161,14 +113,15 @@ void Comm::I2c1::I2C1Initialize()
     I2C1->CR1 = I2C1->CR1 & ~I2C_CR1_SWRST;
     I2C1->CR1 = I2C1->CR1 & ~I2C_CR1_NOSTRETCH;
     I2C1->CR1 = I2C1->CR1 & ~I2C_CR1_ENGC;
-    I2C1->CR1 = I2C1->CR1 | I2C_CR1_ACK;
+//    I2C1->CR1 = I2C1->CR1 | I2C_CR1_ACK;
     I2C1->CR2 = I2C1->CR2 | I2C_CR2_FREQ_4;
-    I2C1->CCR = I2C1->CCR | I2C_CCR_FS;
+    I2C1->CCR = I2C1->CCR & ~I2C_CCR_FS;
     I2C1->CCR = I2C1->CCR & ~I2C_CCR_DUTY;
 
-    I2C1->CCR = I2C1->CCR | (0x0096 << 0);
+    I2C1->CCR = I2C1->CCR | (80 << 0);
     I2C1->TRISE = 17U;
     I2C1->CR2 = I2C1->CR2 | I2C_CR2_LAST;
+//    I2C1->CR2 = I2C1->CR2 | I2C_CR2_ITEVTEN;
     I2C1->CR2 = I2C1->CR2 | I2C_CR2_DMAEN;
     I2C1->CR1 = I2C1->CR1 | I2C_CR1_PE;
 }

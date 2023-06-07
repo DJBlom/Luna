@@ -25,17 +25,20 @@ void System::Peripherals::RccInitialization()
     RCC->AHB1ENR = RCC->AHB1ENR | RCC_AHB1ENR_DMA1EN;
 
     // COMMs
-    RCC->APB1ENR = RCC->APB1ENR | RCC_APB1ENR_USART2EN; 
     RCC->APB1ENR = RCC->APB1ENR | RCC_APB1ENR_I2C1EN; 
+    RCC->APB1ENR = RCC->APB1ENR | RCC_APB1ENR_USART2EN; 
 }
 
 
 void System::Peripherals::EnableIRQHandlers()
 {
-    NVIC_SetPriority(DMA1_Stream7_IRQn, 2);
-    NVIC_SetPriority(DMA1_Stream6_IRQn, 3);
-    NVIC_SetPriority(DMA1_Stream5_IRQn, 4);
+//    NVIC_SetPriority(I2C1_EV_IRQn, 0);
+    NVIC_SetPriority(DMA1_Stream7_IRQn, 3);
+    NVIC_SetPriority(DMA1_Stream6_IRQn, 2);
+    NVIC_SetPriority(DMA1_Stream5_IRQn, 1);
 
+
+//    NVIC_EnableIRQ(I2C1_EV_IRQn);
     NVIC_EnableIRQ(DMA1_Stream7_IRQn);
     NVIC_EnableIRQ(DMA1_Stream6_IRQn);
     NVIC_EnableIRQ(DMA1_Stream5_IRQn);
