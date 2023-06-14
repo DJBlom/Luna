@@ -10,7 +10,7 @@
 #include "Logger.h"
 #include "Uart2.h"
 #include "MPU6050.h"
-#include "I2C1.h"
+#include "I2c1.h"
 
 
 #include "stm32f411xe.h"

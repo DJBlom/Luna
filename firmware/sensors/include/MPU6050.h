@@ -4,7 +4,7 @@
 #ifndef _MPU6050_h_ 
 #define _MPU6050_h_ 
 #include <cstdint>
-#include "I2C.h"
+#include "I2c.h"
 namespace Sensor {
     class MPU6050 {
         public:

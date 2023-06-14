@@ -3,7 +3,7 @@
 
 #ifndef _I2C_1_h_ 
 #define _I2C_1_h_ 
-#include "I2C.h"
+#include "I2c.h"
 #include "stm32f411xe.h"
 static constexpr std::uint16_t I2CBUFFERSIZE{256};
 namespace Comm {
