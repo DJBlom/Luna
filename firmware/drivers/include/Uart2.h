@@ -34,11 +34,14 @@ namespace Comm {
 
         private:
             std::uint16_t dataLength;
-            enum UART2: std::uint32_t {
-                GPIO_ALT = 0,
-                BAUDRATE = 0x113,
-                UPPERBOUND = 65535,
-                LOWERBOUND = 0
+            enum Config: std::uint32_t {
+                gpioAlt = 0,
+                baudrate = 0x113,
+            };
+
+            enum Bounds: std::uint32_t {
+                upperBound = 65535,
+                lowerBound = 0
             };
     };
 }

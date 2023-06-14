@@ -15,4 +15,4 @@ target_include_directories(coreSystem PRIVATE
     ${PROJECT_SOURCE_DIR}/../../system/include/cmsis/
 )
 
-target_link_libraries(coreSystem PRIVATE features middleware system drivers)
+target_link_libraries(coreSystem PRIVATE features middleware system firmware)
