@@ -1,10 +1,10 @@
-
-
-
-
-
-
-
+/********************************************************************************
+ * Contents: I2c1 class
+ * Author: Dawid Blom
+ * Date: June 21, 2023
+ *
+ * Note: This file implements all the methods defined in the I2c1 class. 
+ *******************************************************************************/
 #include "I2c1.h"
 
 
@@ -49,19 +49,15 @@ void Comm::I2c1::RegisterTransmission(std::uint8_t address)
 }
 
 
-bool Comm::I2c1::WriteDMA(std::int8_t data, std::uint8_t len)
+bool Comm::I2c1::WriteI2c(std::int8_t data)
 {
-    bool dmaWriteSuccess{false};
-    if (LengthInBounds(len))
-    {
-        DMA1_Stream7->M0AR = (std::uint32_t)data;
-        DMA1_Stream7->PAR = (std::uint32_t)&I2C1->DR;
-        DMA1_Stream7->NDTR = len; 
-        DMA1_Stream7->CR = DMA1_Stream7->CR | DMA_SxCR_EN;
-        dmaWriteSuccess = true;
-    }
+    bool writeSuccess{false};
+    I2C1->DR = data;
+    while ((I2C1->SR1 & I2C_SR1_TXE) == false) {}
+    I2C1->CR1 = I2C1->CR1 | I2C_CR1_STOP;
+    writeSuccess = true;
 
-    return dmaWriteSuccess;
+    return writeSuccess;
 }
 
 
@@ -126,14 +122,6 @@ void Comm::I2c1::I2C1Initialize()
 
 void Comm::I2c1::Dma1Initialize()
 {
-    // Configure the DMA transmit
-    DMA1_Stream7->CR = DMA1_Stream7->CR & ~DMA_SxCR_EN;
-    DMA1_Stream7->CR = DMA1_Stream7->CR | DMA_SxCR_CHSEL_0;
-    DMA1_Stream7->CR = DMA1_Stream7->CR | DMA_SxCR_MINC;
-    DMA1_Stream7->CR = DMA1_Stream7->CR | DMA_SxCR_DIR_0;
-    DMA1_Stream7->CR = DMA1_Stream7->CR | DMA_SxCR_PL_0;
-    DMA1_Stream7->CR = DMA1_Stream7->CR | DMA_SxCR_TCIE;
-
     // Configure the DMA receiver
     DMA1_Stream5->CR = DMA1_Stream5->CR & ~DMA_SxCR_EN;
     DMA1_Stream5->CR = DMA1_Stream5->CR | DMA_SxCR_CHSEL_0;

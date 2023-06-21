@@ -1,6 +1,12 @@
-
-
-
+/********************************************************************************
+ * Contents: MPU6050 class
+ * Author: Dawid Blom
+ * Date: June 21, 2023
+ *
+ * Note: This file defines the class MPU6050. It's a sensor class that does not
+ * inherit from any interface. Furthermore, it's a self contained class which 
+ * means everything it needs is declared and managed within it.
+ *******************************************************************************/
 #ifndef _MPU6050_h_ 
 #define _MPU6050_h_ 
 #include <cstdint>
@@ -19,9 +25,9 @@ namespace Sensor {
 
         protected:
             virtual std::int8_t* DeviceNumber(Interface::I2c& i2c);
-            virtual bool PowerInitialization(Interface::I2c& i2c);
-            virtual bool SampleRateInitialization(Interface::I2c& i2c);
-            virtual bool GyrometerInitialization(Interface::I2c& i2c);
+            virtual void PowerInitialization(Interface::I2c& i2c);
+            virtual void SampleRateInitialization(Interface::I2c& i2c);
+            virtual void GyrometerInitialization(Interface::I2c& i2c);
 
         private:
             enum Device: std::int32_t {
@@ -29,7 +35,7 @@ namespace Sensor {
             };
 
             enum Config: std::int8_t {
-                singleByte = 2,
+                singleByte = 1,
                 sixBytes = 6,
                 powerConfig = 0x0,
                 sampleRateConfig = 0x7,

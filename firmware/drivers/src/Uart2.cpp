@@ -85,7 +85,7 @@ void Comm::Uart2::Uart2Initialize()
 
 void Comm::Uart2::Dma1Initialize()
 {
-    DMA1_Stream5->CR = DMA1_Stream5->CR & ~DMA_SxCR_EN;
+    DMA1_Stream6->CR = DMA1_Stream6->CR & ~DMA_SxCR_EN;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_CHSEL_2;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_MINC;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_DIR_0;

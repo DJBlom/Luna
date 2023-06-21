@@ -1,6 +1,12 @@
-
-
-
+/********************************************************************************
+ * Contents: I2c1 class
+ * Author: Dawid Blom
+ * Date: June 21, 2023
+ *
+ * Note: This file defines the class I2c1 that inherits from the interface
+ * class I2c. Furthermore, it's a self contained class which means everything
+ * it needs is declared and managed within it.
+ *******************************************************************************/
 #ifndef _I2C_1_h_ 
 #define _I2C_1_h_ 
 #include "I2c.h"
@@ -20,7 +26,7 @@ namespace Comm {
             virtual void StartCommunication();
             virtual void AddressTransmission(std::uint8_t address);
             virtual void RegisterTransmission(std::uint8_t address);
-            virtual bool WriteDMA(std::int8_t data, std::uint8_t len);
+            virtual bool WriteI2c(std::int8_t data);
             virtual std::int8_t* ReadDMA(std::int8_t len);
             virtual void DisableAcknowledgement();
 

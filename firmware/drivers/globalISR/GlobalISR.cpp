@@ -13,16 +13,6 @@
 
 extern "C" 
 {
-    void DMA1_Stream7_IRQHandler()
-    {
-        if (DMA1->HISR & DMA_HISR_TCIF7)
-        {
-            DMA1->HIFCR = DMA1->HIFCR | DMA_HIFCR_CTCIF7;
-            DMA1_Stream7->CR = DMA1_Stream7->CR & ~DMA_SxCR_EN;
-            I2C1->CR1 = I2C1->CR1 | I2C_CR1_STOP;
-        }
-    }
-
     void DMA1_Stream6_IRQHandler()
     {
         if (DMA1->HISR & DMA_HISR_TCIF6)
