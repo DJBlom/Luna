@@ -10,6 +10,7 @@
 #include "stm32f411xe.h"
 
 
+
 extern "C" 
 {
     void DMA1_Stream6_IRQHandler()
@@ -20,4 +21,21 @@ extern "C"
             DMA1_Stream6->CR = DMA1_Stream6->CR & ~DMA_SxCR_EN;
         }
     }
+
+    void DMA1_Stream5_IRQHandler()
+    {
+        if (DMA1->HISR & DMA_HISR_TCIF5)
+        {
+            DMA1->HIFCR = DMA1->HIFCR | DMA_HIFCR_CTCIF5;
+            DMA1_Stream5->CR = DMA1_Stream5->CR & ~DMA_SxCR_EN;
+            I2C1->CR1 = I2C1->CR1 | I2C_CR1_STOP;
+        }
+    }
 }
+
+
+
+
+
+
+

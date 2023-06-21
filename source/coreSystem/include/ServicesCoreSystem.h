@@ -15,6 +15,9 @@ extern "C"
 #include "Logger.h"
 #include "Uart2.h"
 
+#include "MPU6050.h"
+#include "I2c1.h"
+
 void Service1(void* p);
 void Service2(void* p);
 void Service3(void* p);

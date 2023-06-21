@@ -62,9 +62,9 @@ if(BUILD_LUNA)
         target_link_libraries(${PROJECT_NAME} PRIVATE coreSystem)
     endif()
 
-    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/drivers)
-        add_subdirectory(drivers)
-        target_link_libraries(${PROJECT_NAME} PRIVATE drivers)
+    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/firmware)
+        add_subdirectory(firmware)
+        target_link_libraries(${PROJECT_NAME} PRIVATE firmware)
     endif()
 
     if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/system)

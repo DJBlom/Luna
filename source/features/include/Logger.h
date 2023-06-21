@@ -11,7 +11,7 @@
 #include <cstdio>
 #include <cstdarg>
 #include "Uart.h"
-constexpr std::uint16_t BUFFERSIZE{256};
+static constexpr std::uint16_t LOGGERBUFFERSIZE{256};
 namespace System {
     class Logger {
         public:
@@ -22,7 +22,6 @@ namespace System {
             Logger& operator= (const Logger&) = default;
             Logger& operator= (Logger&&) = default;
             virtual ~Logger() = default;
-
             virtual bool LogMessage(Interface::Uart &uart, const char* message, ...);
 
         protected:
@@ -31,11 +30,11 @@ namespace System {
 
         private:
             const char* messagePrefix{"Default: "};
-            char finalMessage[BUFFERSIZE]{0};
+            char finalMessage[LOGGERBUFFERSIZE]{0};
             enum LOGGER {
                 ERROR = -1,
                 LOWERBOUND = 0,
-                UPPERBOUND = BUFFERSIZE
+                UPPERBOUND = LOGGERBUFFERSIZE
             };
     };
 }

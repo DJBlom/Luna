@@ -9,7 +9,11 @@
 #include "Peripherals.h"
 #include "Logger.h"
 #include "Uart2.h"
+#include "MPU6050.h"
+#include "I2c1.h"
 
+
+#include "stm32f411xe.h"
 
 
 
@@ -22,8 +26,11 @@ int main(void)
     System::Peripherals peripherals;
     peripherals.Initialize();
 
-    // Set the gpioa mode for the green user LED
-    GPIOA->MODER = GPIOA->MODER | (1U << 10);
+//    // Set the gpioa mode for the green user LED
+//    GPIOA->MODER = GPIOA->MODER | (1U << 10);
+//    Comm::Uart2 uart2;
+//    System::Logger logger{"System: "};
+//    logger.LogMessage(uart2, "Restarted \n\n\r");
 
 
 

@@ -17,7 +17,7 @@ SRC_DIRS :=\
 INCLUDE_DIRS :=\
 	$(CPPUTEST_HOME)/include\
 	$(PROJECT_DIR)/source/features/include\
-	$(PROJECT_DIR)/drivers/include\
+	$(PROJECT_DIR)/firmware/drivers/include\
 	$(TEST_DIR)/mocks/include\
 
 

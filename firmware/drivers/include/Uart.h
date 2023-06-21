@@ -1,5 +1,5 @@
 /********************************************************************************
- * Contents: Uart class
+ * Contents: Uart interface
  * Author: Dawid Blom
  * Date: April 13, 2023
  *

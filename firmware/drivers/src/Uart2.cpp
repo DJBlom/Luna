@@ -46,11 +46,11 @@ bool Comm::Uart2::TransmissionIsComplete()
 bool Comm::Uart2::LoadData(const char* data)
 {
     bool isDataLoaded{false};
-    DMA1_Stream6->M0AR = (std::uint32_t)data;
-    DMA1_Stream6->PAR = (std::uint32_t)&USART2->DR;
-    DMA1_Stream6->NDTR = this->dataLength;
     if (USART2->SR & USART_SR_TXE)
     {
+        DMA1_Stream6->M0AR = (std::uint32_t)data;
+        DMA1_Stream6->PAR = (std::uint32_t)&USART2->DR;
+        DMA1_Stream6->NDTR = this->dataLength;
         isDataLoaded = true;
     }
 
@@ -62,8 +62,8 @@ bool Comm::Uart2::DataIsInBounds(const char* data)
 {
     bool isInBounds{false};
     if ((data != nullptr) && 
-        (std::strlen(data) < UART2::UPPERBOUND) && 
-        (std::strlen(data) > UART2::LOWERBOUND))
+        (std::strlen(data) < Bounds::upperBound) && 
+        (std::strlen(data) > Bounds::lowerBound))
     {
         this->dataLength = std::strlen(data);
         isInBounds = true;
@@ -75,7 +75,7 @@ bool Comm::Uart2::DataIsInBounds(const char* data)
 
 void Comm::Uart2::Uart2Initialize()
 {
-    USART2->BRR = UART2::BAUDRATE; 
+    USART2->BRR = Config::baudrate; 
     USART2->CR1 = USART2->CR1 | USART_CR1_OVER8;
     USART2->CR3 = USART2->CR3 | USART_CR3_DMAT;
     USART2->CR1 = USART2->CR1 | USART_CR1_TE;
@@ -85,6 +85,7 @@ void Comm::Uart2::Uart2Initialize()
 
 void Comm::Uart2::Dma1Initialize()
 {
+    DMA1_Stream6->CR = DMA1_Stream6->CR & ~DMA_SxCR_EN;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_CHSEL_2;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_MINC;
     DMA1_Stream6->CR = DMA1_Stream6->CR | DMA_SxCR_DIR_0;
@@ -96,10 +97,10 @@ void Comm::Uart2::GpioInitialize()
 {
     GPIOA->MODER = GPIOA->MODER & ~GPIO_MODER_MODER2_0;
     GPIOA->MODER = GPIOA->MODER | GPIO_MODER_MODER2_1;
-    GPIOA->AFR[UART2::GPIO_ALT] = GPIOA->AFR[UART2::GPIO_ALT] | GPIO_AFRL_AFSEL2_0;
-    GPIOA->AFR[UART2::GPIO_ALT] = GPIOA->AFR[UART2::GPIO_ALT] | GPIO_AFRL_AFSEL2_1;
-    GPIOA->AFR[UART2::GPIO_ALT] = GPIOA->AFR[UART2::GPIO_ALT] | GPIO_AFRL_AFSEL2_2;
-    GPIOA->AFR[UART2::GPIO_ALT] = GPIOA->AFR[UART2::GPIO_ALT] & ~GPIO_AFRL_AFSEL2_3;
+    GPIOA->AFR[Config::gpioAlt] = GPIOA->AFR[Config::gpioAlt] | GPIO_AFRL_AFSEL2_0;
+    GPIOA->AFR[Config::gpioAlt] = GPIOA->AFR[Config::gpioAlt] | GPIO_AFRL_AFSEL2_1;
+    GPIOA->AFR[Config::gpioAlt] = GPIOA->AFR[Config::gpioAlt] | GPIO_AFRL_AFSEL2_2;
+    GPIOA->AFR[Config::gpioAlt] = GPIOA->AFR[Config::gpioAlt] & ~GPIO_AFRL_AFSEL2_3;
 }
 
 

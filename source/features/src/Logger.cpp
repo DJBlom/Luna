@@ -46,10 +46,10 @@ bool System::Logger::MessageNotOutOfBounds(const char* message)
 bool System::Logger::FormatMessage(const char* message, std::va_list vlist)
 {
     bool formatted{false};
-    char messageFormat[BUFFERSIZE]{0};
-    std::strncpy(messageFormat, this->messagePrefix, BUFFERSIZE - 1);
-    std::strncat(messageFormat, message, BUFFERSIZE - 1);
-    if (std::vsnprintf(this->finalMessage, BUFFERSIZE, messageFormat, vlist) != LOGGER::ERROR)
+    char messageFormat[LOGGERBUFFERSIZE]{0};
+    std::strncpy(messageFormat, this->messagePrefix, LOGGERBUFFERSIZE - 1);
+    std::strncat(messageFormat, message, LOGGERBUFFERSIZE - 1);
+    if (std::vsnprintf(this->finalMessage, LOGGERBUFFERSIZE, messageFormat, vlist) != LOGGER::ERROR)
     {
         formatted = true;
     }
