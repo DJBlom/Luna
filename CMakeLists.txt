@@ -89,6 +89,17 @@ if(BUILD_LUNA)
         message(STATUS "'objcopy' not found: cannot generate .hex file")
     endif()
 
+    if (EXISTS ${CMAKE_OBJDUMP})
+        add_custom_command(
+            TARGET ${PROJECT_NAME}
+            POST_BUILD
+            COMMAND ${CMAKE_OBJDUMP} -hS $<TARGET_FILE:${PROJECT_NAME}>
+                    >${CMAKE_CURRENT_BINARY_DIR}/$<TARGET_NAME:${PROJECT_NAME}>.S
+        )
+    else ()
+        message(STATUS "'objdump' not found: cannot generate .S file")
+    endif()
+
     if (EXISTS "${TOOLCHAIN_SIZE}")
         add_custom_command(
             TARGET ${PROJECT_NAME} 
